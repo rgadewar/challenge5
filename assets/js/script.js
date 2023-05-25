@@ -13,48 +13,45 @@ console.log(Anchors[i]);
 
 function handleFormSubmit(event) {   
   event.preventDefault();
-  var planning =
-  {
-    time: timeEl.text(),
-    tasks: taskItem,  
-  };
-  for (var i = 0; i < Anchors.length ; i++)
-{
+  console.log("this" + this)
   var taskItem =$(this).siblings(".form-control").val().trim();
-  console.log(taskItem);
-  hourSpan = $(this).siblings(".input-group-prepend").text().trim();
+  console.log("Here" + taskItem);
+  hourSpan = $(this).siblings(".form-control").attr("id");
   console.log(hourSpan);
-  var daySchedule = JSON.parse(localStorage.getItem("daySchedule"));
-  daySchedule.push(planning);
-  localStorage.setItem("daySchedule", JSON.stringify(daySchedule));
+  localStorage.setItem(hourSpan, taskItem);
 }
-}
-
 
 $('.saveBtn').on('click', handleFormSubmit);
 
 
 $(clearSchedule).on("click", function(event)
 {
-  localStorage.removeItem("daySchedule");
+  localStorage.clear();
   window.location.reload();
 });
 
-function init()
-{
+function init(){
   // When the init function is executed, the code inside renderLastGrade function will also execute
   renderMessage();
 }
 
-function renderMessage() 
-{
-  
-   for (var i =0; i<daySchedule.length; i++)
+function renderMessage() {
+   for (var i =9; i<18; i++)
    {
-    // to show current user score
-    $(this).siblings(".input-group-prepend") = daySchedule[i].time
-  
-    $(this).siblings(".form-control") = daySchedule[i].tasks
-    
+
+    var currentHour = dayjs().hour();
+    var blockHour = i;
+    if(currentHour > blockHour){
+      $("#" + i+ "am" ).css("background-color", "grey")
+    }
+   $("#" + i+ "am" ).val(localStorage.getItem(i + "am") ) ;
   }
  }
+
+
+ init();
+
+ setInterval(function () {
+
+$('#currentDay').text(dayjs().format('dddd, MMMM D YYYY, h:mm:ss a'))
+ },1000);
