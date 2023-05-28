@@ -40,11 +40,21 @@ function renderMessage() {
    {
 
     var currentHour = dayjs().hour();
+    console.log(currentHour);
     var blockHour = i;
     if(currentHour > blockHour){
       $("#" + i+ "am" ).css("background-color", "grey")
+      $("#" + i+ "pm" ).css("background-color", "grey")
     }
-   $("#" + i+ "am" ).val(localStorage.getItem(i + "am") ) ;
+    else if (currentHour < blockHour){
+      $("#" + i+ "am" ).css("background-color", "green")
+      $("#" + i+ "pm" ).css("background-color", "green")
+    } else {
+      $("#" + i+ "am" ).css("background-color", "#ff8585")
+      $("#" + i+ "pm" ).css("background-color", "#ff8585")
+    }
+    $("#" + i+ "am" ).val(localStorage.getItem(i + "am") ) ;
+    $("#" + i+ "pm" ).val(localStorage.getItem(i + "pm") ) ;
   }
  }
 
@@ -55,3 +65,8 @@ function renderMessage() {
 
 $('#currentDay').text(dayjs().format('dddd, MMMM D YYYY, h:mm:ss a'))
  },1000);
+
+
+ function pageUpdate(){
+  
+ }
